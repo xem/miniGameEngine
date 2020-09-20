@@ -1,0 +1,45 @@
+﻿<canvas id=canvas></canvas>
+
+<script>
+// Canvas size
+var W = canvas.width = 600;
+var H = canvas.height = 400;
+
+// 2D context
+var ctx = canvas.getContext("2d");
+
+// Optional: make the canvas responsive
+onresize = () => {
+  if(innerWidth/innerHeight > W/H){
+    canvas.style.width = innerHeight * W/H;
+    canvas.style.height = innerHeight;
+  }
+  else {
+    canvas.style.width = innerWidth;
+    canvas.style.height = innerWidth * H/W;
+  }
+}
+
+onresize();
+</script>
+
+<style>
+/* CSS reset */
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Canvas color */
+#canvas {
+  background: #def;
+}
+
+/* Optional: center the canvas */
+#canvas {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+</style>

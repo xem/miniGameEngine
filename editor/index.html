@@ -1,0 +1,31 @@
+<meta charset=utf-8>
+<link rel=stylesheet href=c.css>
+<title>WebGL visualizer</title>
+<script src=c.js></script>
+<textarea id=code></textarea>
+<iframe id=output></iframe>
+<style>
+* { margin: 0; padding: 0; border: 0; outline: 0; box-sizing: border-box; font-size: 12px; }
+#code, #output, .CodeMirror { height: 100%; border-right: 1px solid; float: left; }
+#code, .CodeMirror { width: 50%; min-width: calc(100% - 700px) }
+#output { width: 50%; max-width: 700px; position: fixed; border: none; transition: .1s;}
+</style>
+<script>
+c='';
+E=CodeMirror.fromTextArea(code,{lineNumbers:true,lineWrapping:true,mode:"htmlmixed"});
+U=z=>{if(c)output.srcdoc=c};
+E.on("keyup",e=>{location.hash=btoa(c=E.getValue());U();})
+var id = null, url = null;
+onload=()=>{
+  if(location.hash){E.setValue(c = atob(location.hash.slice(1)));U();}
+  else if(location.search){
+    [url,rest]=location.search.split("&");
+    if(url){
+      console.log(url);
+      page=url.replace(/\?demo=(.*)/,"../$1/index.html");
+      output.src=page;
+      fetch(page).then(data=>data.text()).then(txt=>E.setValue(txt.replace(/<script.*?kaspersky.*?script>/g,'').replace(/\.\.\/\.\./g,'..')))
+    }
+  }
+}
+</script>

@@ -1,0 +1,80 @@
+﻿<canvas id=canvas></canvas>
+
+<script>
+// Canvas size
+var W = canvas.width = 600;
+var H = canvas.height = 400;
+
+// 2D context
+var ctx = canvas.getContext("2d");
+
+// Tiles size
+var tile_W = 50;
+var tile_H = 50;
+
+// Map
+// 0 = empty
+// a-z = types of tiles
+var map = [
+"000000000000",
+"000aa0aa0000",
+"0000000000a0",
+"000000000aa0",
+"0a0a0000aaa0",
+"0000000aaaa0",
+"aaaaaa0aaaaa",
+"aaaaaa0aaaaa"
+];
+
+// Draw the map
+var draw_map = () => {
+  var tile, i, j;
+  for(i = 0; i < map.length; i++){
+    for(j = 0; j < map[i].length; j++){
+      tile = map[i][j];
+      
+      // Draw the tiles "a" in black
+      if(tile == "a"){
+        ctx.fillRect(j*tile_W, i*tile_H, tile_W, tile_H);
+      }
+    }
+  }
+}
+
+draw_map();
+
+// Optional: make the canvas responsive
+onresize = () => {
+  if(innerWidth/innerHeight > W/H){
+    canvas.style.width = innerHeight * W/H;
+    canvas.style.height = innerHeight;
+  }
+  else {
+    canvas.style.width = innerWidth;
+    canvas.style.height = innerWidth * H/W;
+  }
+}
+
+onresize();
+</script>
+
+<style>
+/* CSS reset */
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Canvas color */
+#canvas {
+  background: #def;
+}
+
+/* Optional: center the canvas */
+#canvas {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+</style>
