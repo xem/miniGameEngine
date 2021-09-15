@@ -8,9 +8,8 @@ var H = canvas.height = 400;
 // 2D context
 var ctx = canvas.getContext("2d");
 
-// Tiles size
-var tile_W = 50;
-var tile_H = 50;
+// Tiles size in pixels
+var tile_size = 50;
 
 // Map
 // 0 = empty
@@ -35,7 +34,7 @@ var draw_map = () => {
       
       // Draw the tiles "a" in black
       if(tile == "a"){
-        ctx.fillRect(j*tile_W, i*tile_H, tile_W, tile_H);
+        ctx.fillRect(hero_x * tile_size, hero_y * tile_size, hero_w, hero_h);
       }
     }
   }

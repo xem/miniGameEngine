@@ -1,0 +1,146 @@
+﻿<h3>Use Arrow keys or WASD/ZQSD to move</h3>
+<canvas id=canvas></canvas>
+
+<script>
+// Canvas size
+var W = canvas.width = 600;
+var H = canvas.height = 400;
+
+// 2D context
+var ctx = canvas.getContext("2d");
+
+// Tiles size in pixels
+var tile_size = 50;
+
+// Map
+// 0 = empty
+// a-z = types of tiles
+var map = [
+"000000000000",
+"000aa0aa0000",
+"0000000000a0",
+"000000000aa0",
+"0a0a0000aaa0",
+"0000000aaaa0",
+"aaaaaa0aaaaa",
+"aaaaaa0aaaaa"
+];
+
+// Hero position and size
+var hero_x = 0.2; // in tiles
+var hero_y = 0.2; // in tiles
+var hero_w = 40; // in pixels
+var hero_h = 40; // in pixels
+
+// Draw the map
+var draw_map = () => {
+  var tile, i, j;
+  for(i = 0; i < map.length; i++){
+    for(j = 0; j < map[i].length; j++){
+      tile = map[i][j];
+      
+      // Draw the tiles "a" in black
+      if(tile == "a"){
+        ctx.fillRect(j*tile_size, i*tile_size, tile_size, tile_size);
+      }
+    }
+  }
+}
+
+// Draw the hero in red
+var draw_hero = () => {
+  ctx.fillStyle = "#f88";
+  ctx.fillRect(hero_x * tile_size, hero_y * tile_size, hero_w, hero_h);
+}
+
+// draw the scene
+var draw_scene = () => {
+  
+  // Reset canvas
+  canvas.width ^= 0;
+  
+  // Draw map
+  draw_map();
+  
+  // Draw hero
+  draw_hero();
+}
+
+// Update the game state
+var update = () => {
+  //console.log(left);
+  if(left){
+    hero_x -= .1;
+  }
+  if(up){
+    hero_y -= .1;
+  }
+  if(right){
+    hero_x += .1;
+  }
+  if(down){
+    hero_y += .1;
+  }
+}
+
+// Game loop (60 frames per second)
+var loop = () => {
+  
+  // Update game state 
+  update();
+  
+  // Draw the scene
+  draw_scene();
+  
+  //console.log(up, left, right, down);
+}
+
+setInterval(loop, 16);
+
+// Optional: make the canvas responsive
+onresize = () => {
+  if(innerWidth/innerHeight > W/H){
+    canvas.style.width = innerHeight * W/H;
+    canvas.style.height = innerHeight;
+  }
+  else {
+    canvas.style.width = innerWidth;
+    canvas.style.height = innerWidth * H/W;
+  }
+}
+
+onresize();
+
+// Keyboard inputs (arrows / WASD / ZQSD)
+var left = 0;
+var up = 0;
+var right = 0;
+var down = 0;
+onkeydown = onkeyup = e => {
+  if(e.which == 37 || e.which == 81 || e.which == 65){ left = e.type[5] } // left
+  if(e.which == 38 || e.which == 90 || e.which == 87){ up = e.type[5] } // up
+  if(e.which == 39 || e.which == 68){ right = e.type[5] } // right
+  if(e.which == 40 || e.which == 83){ down = e.type[5] } // down
+}
+</script>
+
+<style>
+/* Body style reset */
+body {
+  margin: 0;
+  font-family: Calibri;
+}
+
+/* Canvas color */
+#canvas {
+  background: #def;
+}
+
+/* Optional: center the canvas */
+#canvas {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+</style>
